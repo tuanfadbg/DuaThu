@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/background_light"
+    android:theme="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen">
+    <ImageView
+        android:id="@+id/game_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/pic_background"
+        android:layout_centerHorizontal="true"
+        android:padding="20dp"
+        />
+    <EditText
+        android:id="@+id/edit_text_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_your_name"
+        android:layout_below="@+id/game_logo"
+        android:layout_centerHorizontal="true"
+        android:maxLength="30"
+        android:textColor="#000"/>
+
+
+
+    <ImageButton
+        android:id="@+id/btn_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/edit_text_name"
+        android:layout_below="@+id/game_logo"
+        android:layout_marginTop="3dp"
+        android:src="@drawable/btn_play"
+        android:background="@android:color/background_light"
+        android:layout_marginLeft="15dp"
+        />
+</RelativeLayout>
