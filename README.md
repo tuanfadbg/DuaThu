@@ -20,4 +20,4 @@ Vị trí của con thú là vị tri độ dài của Seekbar.
 
 Khi về đích sẽ dựa vào điều kiện thứ tự về đích của các con thú để thay đổi số điểm của người chơi.
 
-[Cấu trúc Game](https://imgur.com/a/JP3O3) 
+[Cấu trúc Game](https://imgur.com/a/Lc3u4) 
