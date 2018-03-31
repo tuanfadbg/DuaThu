@@ -7,7 +7,10 @@ import android.os.Handler;
 import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +19,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     TextView score;
+    ImageButton btn_play_2;
     SeekBar seekBar1, seekBar2, seekBar3;
     int maxProgress = 300;
     int race = 100;
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         // full screen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         define();
 
         bird = getIntent().getIntExtra("BIRD", 0);
@@ -83,8 +88,14 @@ public class MainActivity extends AppCompatActivity {
         };
 
         countDownTimer.start();
-
         Log.e("break", "hi");
+        // on click button play show popup select bird
+        btn_play_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPopup(textscore);
+            }
+        });
 
     }
 
@@ -102,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                     .show();
             textscore -= 10;
         }
+
         score.setText(textscore + " ");
 //
 //        SystemClock.sleep(3000); // 3s
@@ -109,16 +121,20 @@ public class MainActivity extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(MainActivity.this, Popup.class);
-                intent.putExtra("SCORE", textscore);
-                startActivity(intent);
+                showPopup(textscore);
+                btn_play_2.setVisibility(View.VISIBLE);
             }
         },3000 );
 //        Intent intent = new Intent(this, Popup.class);
 //        intent.putExtra("SCORE", textscore);
 //        startActivity(intent);
     }
+    protected void showPopup(int textscore) {
 
+        Intent intent = new Intent(MainActivity.this, Popup.class);
+        intent.putExtra("SCORE", textscore);
+        startActivity(intent);
+    }
     protected boolean setRace(boolean isBreak) {
         Random rand = new Random();
         int one, two, three;
@@ -188,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected void define() {
         score = findViewById(R.id.score);
+        btn_play_2 = findViewById(R.id.btn_play_2);
         seekBar1 = findViewById(R.id.SeekBar1);
         seekBar2 = findViewById(R.id.SeekBar2);
         seekBar3 = findViewById(R.id.SeekBar3);
