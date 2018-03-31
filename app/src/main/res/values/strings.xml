@@ -3,6 +3,6 @@
     <string name="max_score">100</string>
     <string name="enter_your_name">Enter Your Name</string>
     <string name="please_enter_your_name">Please enter your name</string>
-    <string name="you_winned">You Winned</string>
-    <string name="your_lost">You Lost</string>
+    <string name="you_winned">You Won</string>
+    <string name="your_lost">You Lose</string>
 </resources>
