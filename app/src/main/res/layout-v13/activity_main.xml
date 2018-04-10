@@ -79,7 +79,7 @@
 
     <ImageButton
 
-        android:id="@+id/btn_play_2"
+        android:id="@+id/btn_select_bird"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

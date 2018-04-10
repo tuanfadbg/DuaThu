@@ -39,8 +39,6 @@ public class Popup extends AppCompatActivity{
         getSelectBird(bird1);
         getSelectBird(bird2);
         getSelectBird(bird3);
-
-
     }
     public void getSelectBird(final ImageButton imageButton) {
         imageButton.setOnClickListener(new View.OnClickListener() {

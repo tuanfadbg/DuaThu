@@ -1,15 +1,14 @@
 package com.example.tuannguyen.myapplication;
 
-import android.content.Intent;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -17,16 +16,15 @@ import android.widget.Toast;
 
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     TextView score;
-    ImageButton btn_play_2;
+    ImageButton btnSelectBird, bird1, bird2, bird3;
     SeekBar seekBar1, seekBar2, seekBar3;
     int maxProgress = 300;
-    int race = 100;
+    int race = 300;
     int bird;
-    int textscore;
-    int defaultScore = 100;
-    boolean countDownTimerDone = false;
+    int textscore = 100;
+    int boundRand = 20;
 
 
     @Override
@@ -36,12 +34,16 @@ public class MainActivity extends AppCompatActivity {
         // full screen
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON, WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        define();
+        //giữ màn hình luôn sáng
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
+                WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        define();
+        textscore = Integer.parseInt(getString(R.string.max_score));
         bird = getIntent().getIntExtra("BIRD", 0);
-        textscore = getIntent().getIntExtra("SCORE", defaultScore);
-        Log.e("bird", bird + "");
+
+//        Log.e("Main - textscore", textscore + " " + R.string.enter_your_name);
+        Log.e("Main - bird", bird + "");
 
         score.setText(textscore + "");
 
@@ -49,9 +51,24 @@ public class MainActivity extends AppCompatActivity {
         seekBar2.setMax(maxProgress);
         seekBar3.setMax(maxProgress);
 
+
+        CountDownTimer countDownTimer = createNewCountDownTimer();
+        countDownTimer.start();
+
+        Log.e("break", "hi");
+        // on click button play show popup select bird
+        btnSelectBird.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                shopPopup();
+            }
+        });
+
+    }
+
+    private CountDownTimer createNewCountDownTimer() {
         final int allTime = 60000;
         final int countDownInterval = 100;
-
         CountDownTimer countDownTimer = new CountDownTimer(allTime, countDownInterval) {
             int time = 0;
             int het = allTime / countDownInterval * 3 / 5;
@@ -86,16 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
-
-        countDownTimer.start();
-        Log.e("break", "hi");
-        // on click button play show popup select bird
-        btn_play_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopup(textscore);
-            }
-        });
+        return countDownTimer;
 
     }
 
@@ -115,26 +123,77 @@ public class MainActivity extends AppCompatActivity {
         }
 
         score.setText(textscore + " ");
-//
 //        SystemClock.sleep(3000); // 3s
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                showPopup(textscore);
-                btn_play_2.setVisibility(View.VISIBLE);
+                // get display metric
+                shopPopup();
+                // hien thi button select bird
+                btnSelectBird.setVisibility(View.VISIBLE);
+
             }
         },3000 );
-//        Intent intent = new Intent(this, Popup.class);
-//        intent.putExtra("SCORE", textscore);
-//        startActivity(intent);
     }
-    protected void showPopup(int textscore) {
+    protected void shopPopup() {
+        // nếu đã điền tên rồi thì lấy kích thước màn hình
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        Intent intent = new Intent(MainActivity.this, Popup.class);
-        intent.putExtra("SCORE", textscore);
-        startActivity(intent);
+
+        DialogSelectBird dialogSelectBird = new DialogSelectBird();
+
+        Dialog dialogSelected = dialogSelectBird.showDialogSelectBird(MainActivity.this, dm);
+
+        StartGame startGame = new StartGame();
+
+        bird1 = dialogSelected.findViewById(R.id.bird_1);
+        bird2 = dialogSelected.findViewById(R.id.bird_2);
+        bird3 = dialogSelected.findViewById(R.id.bird_3);
+
+        // bat su kien khi chon chim
+        bird = onSelectBirdAndDimissDialog(bird1, dialogSelected);
+        bird = onSelectBirdAndDimissDialog(bird2, dialogSelected);
+        bird = onSelectBirdAndDimissDialog(bird3, dialogSelected);
+
     }
+    protected int onSelectBirdAndDimissDialog(final ImageButton imageButton, final Dialog dialog) {
+        final int[] bird = {0};
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                switch (imageButton.getId()) {
+                    case R.id.bird_1:
+                        bird[0] = 1;
+                        break;
+                    case R.id.bird_2:
+                        bird[0] = 2;
+                        break;
+                    case R.id.bird_3:
+                        bird[0] = 3;
+                        break;
+                }
+//                Log.e("bird", bird + "");
+                dialog.dismiss();
+                startNewRace();
+            }
+        });
+        return bird[0];
+    }
+
+    private void startNewRace() {
+        btnSelectBird.setVisibility(View.INVISIBLE);
+
+        seekBar1.setProgress(0);
+        seekBar2.setProgress(0);
+        seekBar3.setProgress(0);
+
+        CountDownTimer countDownTimer = createNewCountDownTimer();
+        countDownTimer.start();
+    }
+
     protected boolean setRace(boolean isBreak) {
         Random rand = new Random();
         int one, two, three;
@@ -144,9 +203,9 @@ public class MainActivity extends AppCompatActivity {
         two = seekBar2.getProgress();
         three = seekBar3.getProgress();
 
-        one += rand.nextInt(5);
-        two += rand.nextInt(5);
-        three += rand.nextInt(5);
+        one += rand.nextInt(boundRand);
+        two += rand.nextInt(boundRand);
+        three += rand.nextInt(boundRand);
 
         int max = one;
         if (max < two)
@@ -204,7 +263,7 @@ public class MainActivity extends AppCompatActivity {
 
     protected void define() {
         score = findViewById(R.id.score);
-        btn_play_2 = findViewById(R.id.btn_play_2);
+        btnSelectBird = findViewById(R.id.btn_select_bird);
         seekBar1 = findViewById(R.id.SeekBar1);
         seekBar2 = findViewById(R.id.SeekBar2);
         seekBar3 = findViewById(R.id.SeekBar3);
