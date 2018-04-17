@@ -20,10 +20,6 @@
         <activity android:name=".MainActivity"
             android:noHistory="true"
             android:screenOrientation="landscape"/>
-        <activity android:name=".Popup"
-            android:theme="@style/custom"
-            android:noHistory="true"
-            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

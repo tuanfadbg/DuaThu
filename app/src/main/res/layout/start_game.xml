@@ -36,4 +36,13 @@
         android:background="@android:color/background_light"
         android:layout_marginLeft="15dp"
         />
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/edit_text_name"
+        android:id="@+id/lastGame"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:textColor="@color/colorAccent"
+        android:layout_marginTop="10dp"/>
 </RelativeLayout>

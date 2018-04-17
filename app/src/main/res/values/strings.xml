@@ -5,4 +5,7 @@
     <string name="please_enter_your_name">Please enter your name</string>
     <string name="you_winned">You Won</string>
     <string name="your_lost">You Lose</string>
+    <string name="are_you">Are you</string>
+    <string name="hoi_cham">\?</string>
+    <string name="go_to_your_race">Go to your Race</string>
 </resources>

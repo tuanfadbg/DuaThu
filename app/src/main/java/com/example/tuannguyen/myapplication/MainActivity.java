@@ -1,6 +1,8 @@
 package com.example.tuannguyen.myapplication;
 
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -15,17 +17,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Random;
+import java.util.prefs.Preferences;
 
 public class MainActivity extends AppCompatActivity{
     TextView score;
     ImageButton btnSelectBird, bird1, bird2, bird3;
     SeekBar seekBar1, seekBar2, seekBar3;
     int maxProgress = 300;
-    int race = 300;
+    int race = 100;
     int bird;
-    int textscore = 100;
-    int boundRand = 20;
-
+    int textscore;
+    int boundRand = 5;
+    int bonus = 45;
+    int fines = 20;
+    int DEFAULT_SCORE = 100;
+    SharedPreferences dataGame;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +46,9 @@ public class MainActivity extends AppCompatActivity{
                 WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         define();
-        textscore = Integer.parseInt(getString(R.string.max_score));
-        bird = getIntent().getIntExtra("BIRD", 0);
 
-//        Log.e("Main - textscore", textscore + " " + R.string.enter_your_name);
-        Log.e("Main - bird", bird + "");
+        textscore = dataGame.getInt("score", DEFAULT_SCORE);
+        bird = getIntent().getIntExtra("BIRD", 0);
 
         score.setText(textscore + "");
 
@@ -51,11 +56,9 @@ public class MainActivity extends AppCompatActivity{
         seekBar2.setMax(maxProgress);
         seekBar3.setMax(maxProgress);
 
-
         CountDownTimer countDownTimer = createNewCountDownTimer();
         countDownTimer.start();
 
-        Log.e("break", "hi");
         // on click button play show popup select bird
         btnSelectBird.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,29 +116,47 @@ public class MainActivity extends AppCompatActivity{
 
         Log.e("winner", winner + "");
         if (winner == bird) {
-            textscore += 10;
+            textscore += bonus;
             Toast.makeText(getApplicationContext(), R.string.you_winned, Toast.LENGTH_LONG)
                     .show();
         } else {
             Toast.makeText(getApplicationContext(), R.string.your_lost, Toast.LENGTH_LONG)
                     .show();
-            textscore -= 10;
+            textscore -= fines;
         }
+        if (textscore < 0) {
+            startNewGame();
+        } else {
+            dataGame = getSharedPreferences("data", MODE_PRIVATE);
+            editor = dataGame.edit();
+            editor.putInt("score", textscore);
+            editor.apply();
+            editor.commit();
+            score.setText(textscore + " ");
 
-        score.setText(textscore + " ");
-//        SystemClock.sleep(3000); // 3s
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // get display metric
-                shopPopup();
-                // hien thi button select bird
-                btnSelectBird.setVisibility(View.VISIBLE);
+            int delayMillis = 3000;
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // get display metric
+                    shopPopup();
+                    // hien thi button select bird
+                    btnSelectBird.setVisibility(View.VISIBLE);
 
-            }
-        },3000 );
+                }
+            }, delayMillis);
+        }
     }
+
+    private void startNewGame() {
+        editor.clear();
+        editor.apply();
+        editor.commit();
+        startActivity(new Intent(this, StartGame.class));
+
+    }
+
     protected void shopPopup() {
         // nếu đã điền tên rồi thì lấy kích thước màn hình
         DisplayMetrics dm = new DisplayMetrics();
@@ -189,6 +210,8 @@ public class MainActivity extends AppCompatActivity{
         seekBar1.setProgress(0);
         seekBar2.setProgress(0);
         seekBar3.setProgress(0);
+        //set score = default score
+        editor.putInt("score", DEFAULT_SCORE);
 
         CountDownTimer countDownTimer = createNewCountDownTimer();
         countDownTimer.start();
@@ -257,7 +280,6 @@ public class MainActivity extends AppCompatActivity{
             max = three;
             pos = 3;
         }
-//        Toast.makeText(getApplicationContext(), pos + " winned", Toast.LENGTH_LONG).show();
         return pos;
     }
 
@@ -270,5 +292,7 @@ public class MainActivity extends AppCompatActivity{
         seekBar1.setEnabled(false);
         seekBar2.setEnabled(false);
         seekBar3.setEnabled(false);
+        dataGame = getSharedPreferences("data", MODE_PRIVATE);
+        editor = dataGame.edit();
     }
 }
