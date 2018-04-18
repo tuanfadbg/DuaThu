@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Animal Crossing</string>
     <string name="max_score">100</string>
     <string name="enter_your_name">Enter Your Name</string>
     <string name="please_enter_your_name">Please enter your name</string>
