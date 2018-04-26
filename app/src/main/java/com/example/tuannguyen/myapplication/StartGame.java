@@ -41,12 +41,13 @@ public class StartGame extends AppCompatActivity {
         final SharedPreferences dataGame = getSharedPreferences("data", MODE_PRIVATE);
 
         nameLastGame = dataGame.getString("name", null);
-        if (nameLastGame !=  null) {
+        final boolean hasLastGame = nameLastGame !=  null;
+        if (hasLastGame) {
             lastGame.setText(getString(R.string.are_you) + " " + nameLastGame + getString(R.string.hoi_cham) + " " + getString(R.string.go_to_your_race));
             lastGame.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    gotoRace(nameLastGame, dataGame);
+                    gotoRace(nameLastGame, dataGame, false);
                 }
             });
         }
@@ -57,19 +58,22 @@ public class StartGame extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String name = editName.getText().toString().trim();
-                gotoRace(name, dataGame);
+                gotoRace(name, dataGame, true);
             }
         });
 
     }
 
-    private void gotoRace(String name, SharedPreferences dataGame) {
+    private void gotoRace(String name, SharedPreferences dataGame, boolean isNewGame) {
         if (name.length() == 0) // kiểm tra xem đã điền tên chưa
             Toast.makeText(getApplicationContext(), R.string.please_enter_your_name, Toast.LENGTH_SHORT).show();
         else {
             SharedPreferences.Editor editor = dataGame.edit();
             editor.putString("name", name);
-            editor.putInt("score", scoreLastGame);
+            if (isNewGame)
+                editor.putInt("score", DEFAULT_SCORE);
+            else
+                editor.putInt("score", scoreLastGame);
             editor.apply();
             editor.commit();
             // nếu đã điền tên rồi thì lấy kích thước màn hình
