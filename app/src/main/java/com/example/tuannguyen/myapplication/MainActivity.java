@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity{
     ImageButton btnSelectBird, bird1, bird2, bird3;
     SeekBar seekBar1, seekBar2, seekBar3;
     int maxProgress = 300;
+    int minProgress = 0;
     int race = 100;
     int bird;
     int textscore;
@@ -205,11 +206,12 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void startNewRace() {
+
         btnSelectBird.setVisibility(View.INVISIBLE);
 
-        seekBar1.setProgress(0);
-        seekBar2.setProgress(0);
-        seekBar3.setProgress(0);
+        seekBar1.setProgress(minProgress);
+        seekBar2.setProgress(minProgress);
+        seekBar3.setProgress(minProgress);
         //set score = default score
         editor.putInt("score", DEFAULT_SCORE);
 
