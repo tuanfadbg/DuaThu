@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@android:color/background_light"
+    android:background="@drawable/background_race"
     android:theme="@android:style/Theme.Wallpaper.NoTitleBar.Fullscreen">
     <ImageView
         android:id="@+id/game_logo"
@@ -22,7 +22,9 @@
         android:layout_below="@+id/game_logo"
         android:layout_centerHorizontal="true"
         android:maxLength="30"
-        android:textColor="#000"/>
+        android:textColor="#000"
+        android:background="#64ffffff"
+        android:layout_marginTop="10dp"/>
 
 
 
@@ -34,7 +36,7 @@
         android:layout_below="@+id/game_logo"
         android:layout_marginTop="3dp"
         android:src="@drawable/btn_play"
-        android:background="@android:color/background_light"
+        android:background="@null"
         android:layout_marginLeft="15dp"
         />
     <TextView
@@ -45,6 +47,7 @@
         android:layout_height="wrap_content"
         android:textSize="25dp"
         android:textColor="@color/colorAccent"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="20dp"
+        android:background="@null"/>
 
 </RelativeLayout>
