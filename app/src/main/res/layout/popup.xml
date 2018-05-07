@@ -13,14 +13,16 @@
         android:orientation="horizontal"
         android:layout_centerInParent="true"
         android:weightSum="3"
-        android:padding="5dp">
+        android:padding="5dp"
+        android:background="@drawable/background_select_bird">
         <ImageButton
             android:id="@+id/bird_1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:src="@drawable/pic_bird_1_big"
-            android:background="#fff"
+            android:background="@null"
             android:layout_weight="1"
+            android:layout_gravity="center"
             />
         <ImageButton
             android:id="@+id/bird_2"
@@ -28,14 +30,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:src="@drawable/pic_bird_2_big"
-            android:background="#fff"/>
+            android:background="@null"
+            android:layout_gravity="center"/>
         <ImageButton
             android:id="@+id/bird_3"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:src="@drawable/pic_bird_3_big"
-            android:background="#fff"
+            android:background="@null"
+            android:layout_gravity="center"
             />
     </LinearLayout>
 </RelativeLayout>

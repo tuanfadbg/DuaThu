@@ -14,10 +14,10 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff"
         android:orientation="vertical"
         android:weightSum="5"
-        tools:context="com.example.tuannguyen.myapplication.MainActivity">
+        tools:context="com.example.tuannguyen.myapplication.MainActivity"
+        android:background="@drawable/background_race">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -58,21 +58,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:thumb="@drawable/pic_bird_1" />
+                    android:thumb="@drawable/pic_bird_1"
+                    android:progressDrawable="@drawable/seekbar_no_background"/>
 
                 <SeekBar
                     android:id="@+id/SeekBar2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:thumb="@drawable/pic_bird_2" />
+                    android:thumb="@drawable/pic_bird_2"
+                    android:progressDrawable="@drawable/seekbar_no_background"/>
 
                 <SeekBar
                     android:id="@+id/SeekBar3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:thumb="@drawable/pic_bird_3" />
+                    android:thumb="@drawable/pic_bird_3"
+                    android:progressDrawable="@drawable/seekbar_no_background"/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
