@@ -23,8 +23,10 @@
         android:layout_centerHorizontal="true"
         android:maxLength="30"
         android:textColor="#000"
-        android:background="#64ffffff"
-        android:layout_marginTop="10dp"/>
+        android:background="@drawable/background_edit_text_name"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        />
 
 
 
@@ -34,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/edit_text_name"
         android:layout_below="@+id/game_logo"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="13dp"
         android:src="@drawable/btn_play"
         android:background="@null"
         android:layout_marginLeft="15dp"
@@ -45,7 +47,7 @@
         android:id="@+id/lastGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25dp"
+        android:textSize="23dp"
         android:textColor="@color/colorAccent"
         android:layout_marginTop="20dp"
         android:background="@null"/>

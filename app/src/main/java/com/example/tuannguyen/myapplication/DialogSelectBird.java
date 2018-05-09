@@ -32,7 +32,7 @@ public class DialogSelectBird {
         Window window = selectBirdDialog.getWindow();
         window.setLayout((dm.widthPixels)*8/10, (dm.heightPixels)*6/10);
 
-//        define(selectBirdDialog);
+//        declare(selectBirdDialog);
 //
 //        getSelectBird(bird1);
 //        getSelectBird(bird2);

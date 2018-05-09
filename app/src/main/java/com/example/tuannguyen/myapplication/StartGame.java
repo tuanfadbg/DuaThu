@@ -35,7 +35,7 @@ public class StartGame extends AppCompatActivity {
                 LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.start_game);
 
-        define();
+        declare();
 
         final SharedPreferences dataGame = getSharedPreferences("data", MODE_PRIVATE);
 
@@ -119,7 +119,7 @@ public class StartGame extends AppCompatActivity {
     }
 
 
-    protected void define() {
+    protected void declare() {
         editName = findViewById(R.id.edit_text_name);
         btnStart = findViewById(R.id.btn_start);
         lastGame = findViewById(R.id.lastGame);
